@@ -2,215 +2,219 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Dashboard · Open Sourcerers</title>
+  <title>Dashboard | Open Sourcerers of the git mountain</title>
 
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-  <div class="app">
+  <header class="topbar">
 
-    <header class="topbar">
+    <div>
+      <h1>Open Sourcerers of the git mountain</h1>
+      <p>Dashboard</p>
+    </div>
 
-      <div class="topbar-brand">
+    <div class="topbar-actions">
 
-        <p class="eyebrow">
-          OPEN SOURCERERS
-        </p>
+      <span id="userEmail">
+        Wird geladen...
+      </span>
 
-        <h1>
-          of the git mountain
-        </h1>
+      <button
+        id="logoutBtn"
+        class="btn danger-btn"
+      >
+        Logout
+      </button>
 
-      </div>
+    </div>
 
+  </header>
 
-      <div class="topbar-user">
 
-        <span id="user-email">
-          Wird geladen...
-        </span>
+  <main class="dashboard">
 
-        <button
-          id="profile-button"
-          class="secondary-button"
-          type="button"
-        >
-          Mein Profil
-        </button>
+    <section class="welcome-section">
 
-        <button
-          id="logout-button"
-          class="secondary-button"
-          type="button"
-        >
-          Logout
-        </button>
+      <h2>
+        Willkommen zurück!
+      </h2>
 
-      </div>
+      <p>
+        Verwalte deine Arbeitszeit, Aufträge und dein Profil.
+      </p>
 
-    </header>
+    </section>
 
 
-    <main class="dashboard">
+    <section class="dashboard-grid">
 
-      <section class="welcome">
 
-        <p class="eyebrow">
-          DASHBOARD
-        </p>
+      <!-- =========================================
+           ARBEITSZEIT
+      ========================================== -->
 
-        <h2>
-          Willkommen zurück.
-        </h2>
+      <a
+        href="worktime.html"
+        class="dashboard-card"
+      >
 
-        <p>
-          Dein Workspace für Arbeitszeit,
-          Aufträge und Zusammenarbeit.
-        </p>
+        <div class="dashboard-card-icon">
+          ⏱️
+        </div>
 
-      </section>
+        <div>
 
+          <h3>
+            Arbeitszeit
+          </h3>
 
-      <section class="dashboard-grid">
+          <p>
+            Arbeitszeit starten, stoppen und
+            Monatsstunden ansehen.
+          </p>
 
+          <strong id="monthlyHours">
+            Wird geladen...
+          </strong>
 
-        <!-- ARBEITSZEIT -->
+        </div>
 
-        <article
-          class="dashboard-card"
-          id="worktime-card"
-          style="cursor: pointer;"
-        >
+      </a>
 
-          <div class="card-icon">
-            ⏱
-          </div>
 
-          <div>
+      <!-- =========================================
+           AUFTRÄGE
+      ========================================== -->
 
-            <h3>
-              Arbeitszeit
-            </h3>
+      <a
+        href="orders.html"
+        class="dashboard-card"
+      >
 
-            <p>
-              Starte und beende hier
-              deine Arbeitszeit.
-            </p>
+        <div class="dashboard-card-icon">
+          📦
+        </div>
 
-            <strong id="monthly-hours">
-              0h 00min
-            </strong>
+        <div>
 
-            <span class="card-placeholder">
-              Arbeitszeit öffnen →
-            </span>
+          <h3>
+            Aufträge
+          </h3>
 
-          </div>
+          <p>
+            Aktive Aufträge ansehen, eigene
+            Aufträge erstellen und an Projekten
+            mitarbeiten.
+          </p>
 
-        </article>
+          <strong>
+            Aufträge öffnen →
+          </strong>
 
+        </div>
 
-        <!-- AUFTRÄGE -->
+      </a>
 
-        <article class="dashboard-card">
 
-          <div class="card-icon">
-            📋
-          </div>
+      <!-- =========================================
+           PROFIL
+      ========================================== -->
 
-          <div>
+      <a
+        href="profile.html"
+        class="dashboard-card"
+      >
 
-            <h3>
-              Aufträge
-            </h3>
+        <div class="dashboard-card-icon">
+          👤
+        </div>
 
-            <p>
-              Offene und aktive Aufträge
-              findest du hier.
-            </p>
+        <div>
 
-            <span class="card-placeholder">
-              Bald verfügbar
-            </span>
+          <h3>
+            Mein Profil
+          </h3>
 
-          </div>
+          <p>
+            E-Mail, Titel und Tech-Stack
+            verwalten.
+          </p>
 
-        </article>
+          <strong>
+            Profil öffnen →
+          </strong>
 
+        </div>
 
-        <!-- PROFIL -->
+      </a>
 
-        <article
-          class="dashboard-card"
-          id="profile-card"
-          style="cursor: pointer;"
-        >
 
-          <div class="card-icon">
-            👤
-          </div>
+      <!-- =========================================
+           ARCHIV
+      ========================================== -->
 
-          <div>
+      <a
+        href="archive.html"
+        class="dashboard-card"
+      >
 
-            <h3>
-              Mein Profil
-            </h3>
+        <div class="dashboard-card-icon">
+          🗄️
+        </div>
 
-            <p>
-              E-Mail, Titel und Techstack
-              bearbeiten.
-            </p>
+        <div>
 
-            <span class="card-placeholder">
-              Profil öffnen →
-            </span>
+          <h3>
+            Archiv
+          </h3>
 
-          </div>
+          <p>
+            Abgeschlossene und gesperrte
+            Aufträge ansehen.
+          </p>
 
-        </article>
+          <strong>
+            Archiv öffnen →
+          </strong>
 
+        </div>
 
-        <!-- ARCHIV -->
+      </a>
 
-        <article class="dashboard-card">
 
-          <div class="card-icon">
-            📦
-          </div>
+    </section>
 
-          <div>
 
-            <h3>
-              Archiv
-            </h3>
+    <!-- =========================================
+         PROFILSTATUS
+    ========================================== -->
 
-            <p>
-              Abgeschlossene Aufträge
-              werden hier gesammelt.
-            </p>
+    <section class="card dashboard-profile-card">
 
-            <span class="card-placeholder">
-              Bald verfügbar
-            </span>
+      <h2>
+        Mein Profil
+      </h2>
 
-          </div>
+      <p>
+        Profilinformationen werden geladen...
+      </p>
 
-        </article>
+      <a
+        href="profile.html"
+        class="btn primary-btn"
+      >
+        Profil bearbeiten
+      </a>
 
+    </section>
 
-      </section>
 
-    </main>
-
-  </div>
+  </main>
 
 
   <script
@@ -220,6 +224,3 @@
 
 </body>
 </html>
-
-
-
