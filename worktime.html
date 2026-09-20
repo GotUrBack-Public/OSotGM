@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Arbeitszeit · Open Sourcerers</title>
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .worktime-layout {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .worktime-card {
+      padding: 30px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+    }
+
+    .worktime-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #596272;
+    }
+
+    .status-dot.active {
+      background: var(--success);
+      box-shadow: 0 0 12px rgba(74, 222, 128, 0.5);
+    }
+
+    .worktime-clock {
+      margin: 0;
+      font-size: clamp(3rem, 10vw, 5.5rem);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .worktime-label {
+      margin: 12px 0 30px;
+      color: var(--muted);
+    }
+
+    .worktime-button {
+      width: 100%;
+      padding: 15px 18px;
+      color: white;
+      background: var(--accent);
+      border: 0;
+      border-radius: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .worktime-button:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .worktime-button.stop {
+      background: #b4232f;
+    }
+
+    .worktime-button.stop:hover {
+      background: #991b2a;
+    }
+
+    .worktime-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .month-total {
+      margin: 12px 0 0;
+      font-size: 3rem;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .month-name {
+      margin: 10px 0 0;
+      color: var(--muted);
+    }
+
+    .session-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .session {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 14px 16px;
+      background: var(--input);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .session-date {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .session-duration {
+      color: var(--muted);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .empty-sessions {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 760px) {
+      .worktime-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app">
+
+    <header class="topbar">
+
+      <div class="topbar-brand">
+
+        <p class="eyebrow">
+          OPEN SOURCERS
+        </p>
+
+        <h1>
+          of the git mountain
+        </h1>
+
+      </div>
+
+
+      <div class="topbar-user">
+
+        <span id="user-email">
+          Wird geladen...
+        </span>
+
+        <button
+          id="dashboard-button"
+          class="secondary-button"
+          type="button"
+        >
+          Dashboard
+        </button>
+
+        <button
+          id="logout-button"
+          class="secondary-button"
+          type="button"
+        >
+          Logout
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <main class="dashboard">
+
+      <section class="welcome">
+
+        <p class="eyebrow">
+          WORK TIME
+        </p>
+
+        <h2>
+          Arbeitszeit
+        </h2>
+
+        <p>
+          Starte deine Arbeitszeit, wenn du anfängst,
+          und beende sie, sobald du fertig bist.
+        </p>
+
+      </section>
+
+
+      <section class="worktime-layout">
+
+
+        <!-- AKTUELLER TIMER -->
+
+        <article class="worktime-card">
+
+          <div class="worktime-status">
+
+            <span
+              id="status-dot"
+              class="status-dot"
+            ></span>
+
+            <span id="status-text">
+              Nicht bei der Arbeit
+            </span>
+
+          </div>
+
+
+          <p
+            id="current-time"
+            class="worktime-clock"
+          >
+            00:00:00
+          </p>
+
+
+          <p class="worktime-label">
+            Aktuelle Arbeitszeit
+          </p>
+
+
+          <button
+            id="worktime-button"
+            class="worktime-button"
+            type="button"
+          >
+            Arbeit beginnen
+          </button>
+
+
+          <p
+            id="worktime-message"
+            class="message"
+            role="status"
+            aria-live="polite"
+          ></p>
+
+        </article>
+
+
+        <!-- MONAT -->
+
+        <article class="worktime-card">
+
+          <p class="eyebrow">
+            DIESES MONAT
+          </p>
+
+          <p
+            id="month-total"
+            class="month-total"
+          >
+            0h 00min
+          </p>
+
+          <p
+            id="month-name"
+            class="month-name"
+          >
+            Wird geladen...
+          </p>
+
+
+          <div
+            id="session-list"
+            class="session-list"
+          ></div>
+
+        </article>
+
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <script
+    type="module"
+    src="js/worktime.js"
+  ></script>
+
+</body>
+</html>
+
+
+
+
+
