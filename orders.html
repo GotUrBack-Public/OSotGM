@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Aufträge | Open Sourcerers of the git mountain</title>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div>
+      <h1>Aufträge</h1>
+      <p>Open Sourcerers of the git mountain</p>
+    </div>
+
+    <div class="topbar-actions">
+      <a href="dashboard.html" class="btn secondary-btn">Dashboard</a>
+      <button id="logoutBtn" class="btn danger-btn">Logout</button>
+    </div>
+  </header>
+
+
+  <main class="orders-page">
+
+    <!-- =========================================
+         AUFTRAG ERSTELLEN
+    ========================================== -->
+
+    <section class="card order-create-card">
+
+      <div class="section-heading">
+        <div>
+          <h2>Neuen Auftrag erstellen</h2>
+          <p>
+            Erstelle einen Auftrag mit Repository, Technologien,
+            Plattform und Kontaktmöglichkeiten.
+          </p>
+        </div>
+      </div>
+
+
+      <form id="orderForm">
+
+        <!-- TITEL -->
+
+        <div class="form-group">
+          <label for="orderTitle">
+            Titel
+          </label>
+
+          <input
+            type="text"
+            id="orderTitle"
+            name="orderTitle"
+            placeholder="z. B. Landingpage für ein neues Projekt"
+            maxlength="120"
+            required
+          >
+        </div>
+
+
+        <!-- BESCHREIBUNG -->
+
+        <div class="form-group">
+          <label for="orderDescription">
+            Beschreibung
+          </label>
+
+          <textarea
+            id="orderDescription"
+            name="orderDescription"
+            placeholder="Beschreibe möglichst genau, was umgesetzt werden soll."
+            maxlength="5000"
+            rows="7"
+            required
+          ></textarea>
+        </div>
+
+
+        <!-- GITHUB -->
+
+        <div class="form-group">
+          <label for="githubUrl">
+            GitHub Repository
+          </label>
+
+          <div class="github-input-wrapper">
+
+            <span class="github-prefix">
+              https://github.com/
+            </span>
+
+            <input
+              type="text"
+              id="githubUrl"
+              name="githubUrl"
+              placeholder="username/repository"
+              maxlength="250"
+              required
+            >
+
+          </div>
+
+          <small>
+            Es muss ein GitHub-Repository angegeben werden.
+          </small>
+        </div>
+
+
+        <!-- PROGRAMMIERSPRACHEN -->
+
+        <div class="selection-section">
+
+          <div class="selection-heading">
+            <label>
+              Programmiersprachen
+            </label>
+
+            <small>
+              Wähle alle verwendeten Sprachen aus.
+            </small>
+          </div>
+
+
+          <div
+            id="languagesContainer"
+            class="selection-grid"
+          ></div>
+
+        </div>
+
+
+        <!-- FRAMEWORKS -->
+
+        <div class="selection-section">
+
+          <div class="selection-heading">
+            <label>
+              Frameworks
+            </label>
+
+            <small>
+              Wähle die verwendeten Frameworks aus.
+            </small>
+          </div>
+
+
+          <div
+            id="frameworksContainer"
+            class="selection-grid"
+          ></div>
+
+        </div>
+
+
+        <!-- DATENBANKEN -->
+
+        <div class="selection-section">
+
+          <div class="selection-heading">
+            <label>
+              Datenbanken
+            </label>
+
+            <small>
+              Optional.
+            </small>
+          </div>
+
+
+          <div
+            id="databasesContainer"
+            class="selection-grid"
+          ></div>
+
+        </div>
+
+
+        <!-- TOOLS / TECHNOLOGIEN -->
+
+        <div class="selection-section">
+
+          <div class="selection-heading">
+            <label>
+              Tools & Technologien
+            </label>
+
+            <small>
+              Optional.
+            </small>
+          </div>
+
+
+          <div
+            id="toolsContainer"
+            class="selection-grid"
+          ></div>
+
+        </div>
+
+
+        <!-- PLATTFORMEN -->
+
+        <div class="selection-section">
+
+          <div class="selection-heading">
+            <label>
+              Plattform
+            </label>
+
+            <small>
+              Wähle alle Zielplattformen aus.
+            </small>
+          </div>
+
+
+          <div
+            id="platformsContainer"
+            class="selection-grid"
+          ></div>
+
+        </div>
+
+
+        <!-- KONTAKT -->
+
+        <div class="contact-section">
+
+          <h3>Kontakt</h3>
+
+          <p class="section-description">
+            Für jeden Auftrag muss mindestens eine erreichbare
+            E-Mail-Adresse angegeben werden.
+          </p>
+
+
+          <div class="form-group">
+
+            <label for="contactEmail">
+              Kontakt-E-Mail
+            </label>
+
+            <input
+              type="email"
+              id="contactEmail"
+              name="contactEmail"
+              placeholder="kontakt@example.com"
+              required
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="contactPhone">
+              Telefonnummer
+              <span class="optional-label">
+                optional
+              </span>
+            </label>
+
+            <input
+              type="tel"
+              id="contactPhone"
+              name="contactPhone"
+              placeholder="+49 123 456789"
+              maxlength="40"
+            >
+
+          </div>
+
+
+          <div class="warning-note">
+
+            <strong>Hinweis</strong>
+
+            <p>
+              Bitte hinterlasse ausschließlich korrekte und
+              erreichbare Kontaktdaten. Falsche oder bewusst
+              irreführende Angaben können zum dauerhaften
+              Ausschluss von der Plattform führen.
+              Bitte beantworte alle Angaben zum Auftrag
+              vollständig und wahrheitsgemäß.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- BESTÄTIGUNGEN -->
+
+        <div class="confirmation-section">
+
+          <h3>Bestätigungen</h3>
+
+
+          <label class="checkbox-row">
+
+            <input
+              type="checkbox"
+              id="confirmContact"
+              required
+            >
+
+            <span>
+              Ich bestätige, dass meine Angaben korrekt sind
+              und die angegebenen Kontaktmöglichkeiten
+              erreichbar sind.
+            </span>
+
+          </label>
+
+
+          <label class="checkbox-row">
+
+            <input
+              type="checkbox"
+              id="confirmRules"
+              required
+            >
+
+            <span>
+              Ich bestätige, dass ich die Regeln für diesen
+              Auftrag akzeptiere.
+            </span>
+
+          </label>
+
+
+          <label class="checkbox-row">
+
+            <input
+              type="checkbox"
+              id="confirmCredits"
+              required
+            >
+
+            <span>
+              Ich bestätige die Credit-Regelung für die
+              Plattform und beteiligte Contributors.
+            </span>
+
+          </label>
+
+        </div>
+
+
+        <div
+          id="orderFormMessage"
+          class="form-message"
+        ></div>
+
+
+        <button
+          type="submit"
+          class="btn primary-btn create-order-btn"
+        >
+          Auftrag erstellen
+        </button>
+
+      </form>
+
+    </section>
+
+
+    <!-- =========================================
+         AUFTRAGSLISTE
+    ========================================== -->
+
+    <section class="card">
+
+      <div class="section-heading">
+
+        <div>
+          <h2>Aktive Aufträge</h2>
+
+          <p>
+            Aufträge, die aktuell bearbeitet oder
+            noch angenommen werden können.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div
+        id="ordersList"
+        class="orders-list"
+      >
+
+        <div class="empty-state">
+          Aufträge werden geladen...
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script type="module" src="js/orders.js"></script>
+
+</body>
+</html>
+
+
+
