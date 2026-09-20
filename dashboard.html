@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
@@ -19,15 +20,31 @@
     <header class="topbar">
 
       <div class="topbar-brand">
-        <p class="eyebrow">OPEN SOURCERERS</p>
-        <h1>of the git mountain</h1>
+
+        <p class="eyebrow">
+          OPEN SOURCERERS
+        </p>
+
+        <h1>
+          of the git mountain
+        </h1>
+
       </div>
+
 
       <div class="topbar-user">
 
         <span id="user-email">
           Wird geladen...
         </span>
+
+        <button
+          id="profile-button"
+          class="secondary-button"
+          type="button"
+        >
+          Mein Profil
+        </button>
 
         <button
           id="logout-button"
@@ -55,8 +72,8 @@
         </h2>
 
         <p>
-          Hier entsteht dein Workspace für
-          Arbeitszeit, Aufträge und Profile.
+          Dein Workspace für Arbeitszeit,
+          Aufträge und Zusammenarbeit.
         </p>
 
       </section>
@@ -116,7 +133,11 @@
         </article>
 
 
-        <article class="dashboard-card">
+        <article
+          class="dashboard-card"
+          id="profile-card"
+          style="cursor: pointer;"
+        >
 
           <div class="card-icon">
             👤
@@ -130,11 +151,11 @@
 
             <p>
               E-Mail, Titel und Techstack
-              werden hier angezeigt.
+              bearbeiten.
             </p>
 
             <span class="card-placeholder">
-              Bald verfügbar
+              Profil öffnen →
             </span>
 
           </div>
@@ -181,3 +202,5 @@
 
 </body>
 </html>
+
+
