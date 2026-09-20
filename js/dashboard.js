@@ -3,7 +3,17 @@ import {
   signOut
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-import { auth } from "./firebase.js";
+import {
+  collection,
+  query,
+  where,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+import {
+  auth,
+  db
+} from "./firebase.js";
 
 
 const userEmail =
@@ -18,14 +28,195 @@ const profileButton =
 const profileCard =
   document.getElementById("profile-card");
 
+const worktimeCard =
+  document.getElementById("worktime-card");
+
+const monthlyHours =
+  document.getElementById("monthly-hours");
+
 
 /*
- * Dashboard schützen
+ * Zeit formatieren
+ */
+
+function formatShortDuration(
+  milliseconds
+) {
+
+  const totalMinutes =
+    Math.floor(
+      Math.max(
+        0,
+        milliseconds
+      ) / 60000
+    );
+
+
+  const hours =
+    Math.floor(
+      totalMinutes / 60
+    );
+
+
+  const minutes =
+    totalMinutes % 60;
+
+
+  return `${hours}h ${String(minutes).padStart(2, "0")}min`;
+
+}
+
+
+/*
+ * Firestore Timestamp → Date
+ */
+
+function timestampToDate(
+  timestamp
+) {
+
+  if (!timestamp) {
+    return null;
+  }
+
+
+  if (
+    typeof timestamp.toDate ===
+    "function"
+  ) {
+
+    return timestamp.toDate();
+
+  }
+
+
+  return null;
+
+}
+
+
+/*
+ * Monatsstunden laden
+ */
+
+async function loadMonthlyHours(
+  user
+) {
+
+  const now =
+    new Date();
+
+
+  const monthStart =
+    new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      1,
+      0,
+      0,
+      0,
+      0
+    );
+
+
+  const nextMonth =
+    new Date(
+      now.getFullYear(),
+      now.getMonth() + 1,
+      1,
+      0,
+      0,
+      0,
+      0
+    );
+
+
+  const sessionsRef =
+    collection(
+      db,
+      "workSessions"
+    );
+
+
+  const sessionsQuery =
+    query(
+      sessionsRef,
+      where(
+        "userId",
+        "==",
+        user.uid
+      )
+    );
+
+
+  const snapshot =
+    await getDocs(
+      sessionsQuery
+    );
+
+
+  let total =
+    0;
+
+
+  snapshot.forEach(
+    (sessionDocument) => {
+
+      const session =
+        sessionDocument.data();
+
+
+      if (
+        session.status !==
+        "completed"
+      ) {
+
+        return;
+
+      }
+
+
+      const startedAt =
+        timestampToDate(
+          session.startedAt
+        );
+
+
+      if (
+        !startedAt ||
+        startedAt < monthStart ||
+        startedAt >= nextMonth
+      ) {
+
+        return;
+
+      }
+
+
+      total +=
+        Number(
+          session.durationMs || 0
+        );
+
+    }
+  );
+
+
+  monthlyHours.textContent =
+    formatShortDuration(
+      total
+    );
+
+}
+
+
+/*
+ * Auth
  */
 
 onAuthStateChanged(
   auth,
-  (user) => {
+  async (user) => {
 
     if (!user) {
 
@@ -33,18 +224,35 @@ onAuthStateChanged(
         "index.html";
 
       return;
+
     }
 
 
     userEmail.textContent =
       user.email;
 
+
+    try {
+
+      await loadMonthlyHours(
+        user
+      );
+
+    } catch (error) {
+
+      console.error(
+        "Monthly hours error:",
+        error
+      );
+
+    }
+
   }
 );
 
 
 /*
- * Profil öffnen
+ * Profil
  */
 
 profileButton.addEventListener(
@@ -70,6 +278,21 @@ profileCard.addEventListener(
 
 
 /*
+ * Arbeitszeit
+ */
+
+worktimeCard.addEventListener(
+  "click",
+  () => {
+
+    window.location.href =
+      "worktime.html";
+
+  }
+);
+
+
+/*
  * Logout
  */
 
@@ -77,7 +300,8 @@ logoutButton.addEventListener(
   "click",
   async () => {
 
-    logoutButton.disabled = true;
+    logoutButton.disabled =
+      true;
 
     logoutButton.textContent =
       "Logout...";
@@ -85,7 +309,10 @@ logoutButton.addEventListener(
 
     try {
 
-      await signOut(auth);
+      await signOut(
+        auth
+      );
+
 
       window.location.href =
         "index.html";
@@ -98,7 +325,8 @@ logoutButton.addEventListener(
       );
 
 
-      logoutButton.disabled = false;
+      logoutButton.disabled =
+        false;
 
       logoutButton.textContent =
         "Logout";
