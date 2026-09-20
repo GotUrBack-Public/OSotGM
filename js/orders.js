@@ -16,11 +16,9 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-/*
-==================================================
- AUSWAHLDATEN
-==================================================
-*/
+/* ==================================================
+   AUSWAHLDATEN
+================================================== */
 
 const languages = [
   "JavaScript",
@@ -181,85 +179,107 @@ const platforms = [
 ];
 
 
-/*
-==================================================
- ELEMENTE
-==================================================
-*/
+/* ==================================================
+   ELEMENTE
+================================================== */
 
-const orderForm = document.getElementById("orderForm");
+const activeOrdersPanel =
+  document.getElementById("activeOrdersPanel");
 
-const orderTitle = document.getElementById("orderTitle");
-const orderDescription = document.getElementById("orderDescription");
-const githubUrl = document.getElementById("githubUrl");
+const createOrderPanel =
+  document.getElementById("createOrderPanel");
 
-const contactEmail = document.getElementById("contactEmail");
-const contactPhone = document.getElementById("contactPhone");
+const showCreateOrderBtn =
+  document.getElementById("showCreateOrderBtn");
 
-const confirmContact = document.getElementById("confirmContact");
-const confirmRules = document.getElementById("confirmRules");
-const confirmCredits = document.getElementById("confirmCredits");
+const cancelCreateOrderBtn =
+  document.getElementById("cancelCreateOrderBtn");
 
-const orderFormMessage = document.getElementById("orderFormMessage");
-const ordersList = document.getElementById("ordersList");
+const orderForm =
+  document.getElementById("orderForm");
 
-const logoutBtn = document.getElementById("logoutBtn");
+const orderTitle =
+  document.getElementById("orderTitle");
 
+const orderDescription =
+  document.getElementById("orderDescription");
 
-/*
-==================================================
- AKTUELLER BENUTZER
-==================================================
-*/
+const githubUrl =
+  document.getElementById("githubUrl");
+
+const contactEmail =
+  document.getElementById("contactEmail");
+
+const contactPhone =
+  document.getElementById("contactPhone");
+
+const confirmContact =
+  document.getElementById("confirmContact");
+
+const confirmRules =
+  document.getElementById("confirmRules");
+
+const confirmCredits =
+  document.getElementById("confirmCredits");
+
+const orderFormMessage =
+  document.getElementById("orderFormMessage");
+
+const ordersList =
+  document.getElementById("ordersList");
+
+const logoutBtn =
+  document.getElementById("logoutBtn");
+
 
 let currentUser = null;
 
 
-/*
-==================================================
- AUSWAHLEN RENDERN
-==================================================
-*/
+/* ==================================================
+   FORMULAR EIN / AUS
+================================================== */
 
-function renderSelectionList(containerId, items, prefix) {
+function showCreateOrder() {
 
-  const container = document.getElementById(containerId);
+  activeOrdersPanel.style.display = "none";
 
-  if (!container) {
-    return;
-  }
+  createOrderPanel.style.display = "block";
 
-  container.innerHTML = "";
-
-  items.forEach((item, index) => {
-
-    const id = `${prefix}-${index}`;
-
-    const label = document.createElement("label");
-
-    label.className = "selection-option";
-
-    label.innerHTML = `
-      <input
-        type="checkbox"
-        value="${escapeHtml(item)}"
-        data-selection="${prefix}"
-        id="${id}"
-      >
-
-      <span>${escapeHtml(item)}</span>
-    `;
-
-    container.appendChild(label);
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
   });
 }
 
 
-/*
-==================================================
- HTML SICHER AUSGEBEN
-==================================================
-*/
+function showActiveOrders() {
+
+  createOrderPanel.style.display = "none";
+
+  activeOrdersPanel.style.display = "block";
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+
+showCreateOrderBtn.addEventListener(
+  "click",
+  showCreateOrder
+);
+
+
+cancelCreateOrderBtn.addEventListener(
+  "click",
+  showActiveOrders
+);
+
+
+/* ==================================================
+   AUSWAHLEN
+================================================== */
 
 function escapeHtml(value) {
 
@@ -272,17 +292,57 @@ function escapeHtml(value) {
 }
 
 
-/*
-==================================================
- AUSGEWÄHLTE WERTE AUSLESEN
-==================================================
-*/
+function renderSelectionList(
+  containerId,
+  items,
+  prefix
+) {
+
+  const container =
+    document.getElementById(containerId);
+
+  if (!container) {
+    return;
+  }
+
+  container.innerHTML = "";
+
+  items.forEach((item, index) => {
+
+    const id =
+      `${prefix}-${index}`;
+
+    const label =
+      document.createElement("label");
+
+    label.className =
+      "selection-option";
+
+    label.innerHTML = `
+      <input
+        type="checkbox"
+        value="${escapeHtml(item)}"
+        data-selection="${prefix}"
+        id="${id}"
+      >
+
+      <span>
+        ${escapeHtml(item)}
+      </span>
+    `;
+
+    container.appendChild(label);
+
+  });
+}
+
 
 function getSelectedValues(prefix) {
 
-  const selected = document.querySelectorAll(
-    `input[data-selection="${prefix}"]:checked`
-  );
+  const selected =
+    document.querySelectorAll(
+      `input[data-selection="${prefix}"]:checked`
+    );
 
   return Array.from(selected).map(
     checkbox => checkbox.value
@@ -290,11 +350,9 @@ function getSelectedValues(prefix) {
 }
 
 
-/*
-==================================================
- GITHUB URL VALIDIEREN
-==================================================
-*/
+/* ==================================================
+   GITHUB
+================================================== */
 
 function normalizeGithubUrl(value) {
 
@@ -305,339 +363,425 @@ function normalizeGithubUrl(value) {
   }
 
   if (!url.startsWith("https://github.com/")) {
-    url = `https://github.com/${url}`;
+
+    url =
+      `https://github.com/${url}`;
   }
+
 
   try {
 
-    const parsed = new URL(url);
+    const parsed =
+      new URL(url);
 
-    if (parsed.hostname !== "github.com") {
+
+    if (
+      parsed.hostname !== "github.com" &&
+      parsed.hostname !== "www.github.com"
+    ) {
+
       return null;
     }
 
-    const parts = parsed.pathname
-      .split("/")
-      .filter(Boolean);
+
+    const parts =
+      parsed.pathname
+        .split("/")
+        .filter(Boolean);
+
 
     if (parts.length < 2) {
       return null;
     }
+
 
     return `https://github.com/${parts[0]}/${parts[1]}`;
 
   } catch {
 
     return null;
+
   }
 }
 
 
-/*
-==================================================
- NACHRICHT
-==================================================
-*/
+/* ==================================================
+   MELDUNGEN
+================================================== */
 
-function showMessage(message, type = "info") {
+function showMessage(
+  message,
+  type = "info"
+) {
 
-  orderFormMessage.textContent = message;
+  orderFormMessage.textContent =
+    message;
 
   orderFormMessage.className =
     `form-message ${type}`;
 }
 
 
-/*
-==================================================
- AUFTRAG ERSTELLEN
-==================================================
-*/
+/* ==================================================
+   AUFTRAG ERSTELLEN
+================================================== */
 
-orderForm.addEventListener("submit", async (event) => {
+orderForm.addEventListener(
+  "submit",
+  async (event) => {
 
-  event.preventDefault();
-
-  if (!currentUser) {
-    showMessage(
-      "Du musst eingeloggt sein.",
-      "error"
-    );
-
-    return;
-  }
+    event.preventDefault();
 
 
-  const title = orderTitle.value.trim();
+    if (!currentUser) {
 
-  const description =
-    orderDescription.value.trim();
+      showMessage(
+        "Du musst eingeloggt sein.",
+        "error"
+      );
 
-
-  const normalizedGithub =
-    normalizeGithubUrl(githubUrl.value);
-
-
-  if (!title) {
-
-    showMessage(
-      "Bitte gib einen Titel ein.",
-      "error"
-    );
-
-    return;
-  }
-
-
-  if (!description) {
-
-    showMessage(
-      "Bitte gib eine Beschreibung ein.",
-      "error"
-    );
-
-    return;
-  }
-
-
-  if (!normalizedGithub) {
-
-    showMessage(
-      "Bitte gib ein gültiges GitHub-Repository an.",
-      "error"
-    );
-
-    return;
-  }
-
-
-  if (!contactEmail.value.trim()) {
-
-    showMessage(
-      "Eine Kontakt-E-Mail ist erforderlich.",
-      "error"
-    );
-
-    return;
-  }
-
-
-  const selectedLanguages =
-    getSelectedValues("language");
-
-
-  const selectedFrameworks =
-    getSelectedValues("framework");
-
-
-  const selectedDatabases =
-    getSelectedValues("database");
-
-
-  const selectedTools =
-    getSelectedValues("tool");
-
-
-  const selectedPlatforms =
-    getSelectedValues("platform");
-
-
-  if (selectedLanguages.length === 0) {
-
-    showMessage(
-      "Bitte wähle mindestens eine Programmiersprache aus.",
-      "error"
-    );
-
-    return;
-  }
-
-
-  if (selectedPlatforms.length === 0) {
-
-    showMessage(
-      "Bitte wähle mindestens eine Plattform aus.",
-      "error"
-    );
-
-    return;
-  }
-
-
-  const button =
-    orderForm.querySelector("button[type='submit']");
-
-
-  button.disabled = true;
-
-  button.textContent = "Auftrag wird erstellt...";
-
-
-  try {
-
-    /*
-    ----------------------------------------------
-    NÄCHSTE AUFTRAGSNUMMER
-    ----------------------------------------------
-    */
-
-    const numberQuery = query(
-      collection(db, "orders"),
-      orderBy("orderNumber", "desc")
-    );
-
-    const numberSnapshot =
-      await getDocs(numberQuery);
-
-
-    let nextNumber = 1;
-
-
-    if (!numberSnapshot.empty) {
-
-      const highest =
-        numberSnapshot.docs[0].data().orderNumber;
-
-      if (typeof highest === "number") {
-        nextNumber = highest + 1;
-      }
+      return;
     }
 
 
-    /*
-    ----------------------------------------------
-    AUFTRAG SPEICHERN
-    ----------------------------------------------
-    */
-
-    await addDoc(
-      collection(db, "orders"),
-      {
-
-        orderNumber: nextNumber,
-
-        orderCode:
-          `OSGTM-${String(nextNumber).padStart(4, "0")}`,
-
-        title,
-
-        description,
-
-        githubUrl:
-          normalizedGithub,
-
-        languages:
-          selectedLanguages,
-
-        frameworks:
-          selectedFrameworks,
-
-        databases:
-          selectedDatabases,
-
-        tools:
-          selectedTools,
-
-        platforms:
-          selectedPlatforms,
-
-        creatorId:
-          currentUser.uid,
-
-        creatorEmail:
-          contactEmail.value.trim(),
-
-        creatorPhone:
-          contactPhone.value.trim() || null,
-
-        status:
-          "open",
-
-        participants: [],
-
-        confirmations: {
-
-          contact:
-            confirmContact.checked,
-
-          rules:
-            confirmRules.checked,
-
-          credits:
-            confirmCredits.checked
-
-        },
-
-        createdAt:
-          serverTimestamp(),
-
-        updatedAt:
-          serverTimestamp(),
-
-        completedAt:
-          null
-
-      }
-    );
+    const title =
+      orderTitle.value.trim();
 
 
-    showMessage(
-      "Auftrag erfolgreich erstellt!",
-      "success"
-    );
+    const description =
+      orderDescription.value.trim();
 
 
-    orderForm.reset();
+    const normalizedGithub =
+      normalizeGithubUrl(
+        githubUrl.value
+      );
 
 
-    await loadOrders();
+    if (!title) {
+
+      showMessage(
+        "Bitte gib einen Titel ein.",
+        "error"
+      );
+
+      return;
+    }
 
 
-  } catch (error) {
+    if (!description) {
 
-    console.error(
-      "Fehler beim Erstellen:",
-      error
-    );
+      showMessage(
+        "Bitte gib eine Beschreibung ein.",
+        "error"
+      );
+
+      return;
+    }
 
 
-    showMessage(
-      "Der Auftrag konnte nicht erstellt werden.",
-      "error"
-    );
+    if (!normalizedGithub) {
 
-  } finally {
+      showMessage(
+        "Bitte gib ein gültiges GitHub-Repository ein.",
+        "error"
+      );
 
-    button.disabled = false;
+      return;
+    }
+
+
+    const email =
+      contactEmail.value.trim();
+
+
+    if (!email) {
+
+      showMessage(
+        "Eine Kontakt-E-Mail ist erforderlich.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    const selectedLanguages =
+      getSelectedValues("language");
+
+
+    const selectedFrameworks =
+      getSelectedValues("framework");
+
+
+    const selectedDatabases =
+      getSelectedValues("database");
+
+
+    const selectedTools =
+      getSelectedValues("tool");
+
+
+    const selectedPlatforms =
+      getSelectedValues("platform");
+
+
+    if (selectedLanguages.length === 0) {
+
+      showMessage(
+        "Bitte wähle mindestens eine Programmiersprache aus.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    if (selectedPlatforms.length === 0) {
+
+      showMessage(
+        "Bitte wähle mindestens eine Plattform aus.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    if (!confirmContact.checked) {
+
+      showMessage(
+        "Bitte bestätige deine Kontaktangaben.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    if (!confirmRules.checked) {
+
+      showMessage(
+        "Bitte bestätige die Auftragsregeln.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    if (!confirmCredits.checked) {
+
+      showMessage(
+        "Bitte bestätige die Credit-Regelung.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    const button =
+      orderForm.querySelector(
+        "button[type='submit']"
+      );
+
+
+    button.disabled = true;
 
     button.textContent =
-      "Auftrag erstellen";
+      "Auftrag wird erstellt...";
+
+
+    try {
+
+      /*
+      ----------------------------------------------
+      NÄCHSTE AUFTRAGSNUMMER
+      ----------------------------------------------
+      */
+
+      const numberQuery =
+        query(
+          collection(db, "orders"),
+          orderBy("orderNumber", "desc")
+        );
+
+
+      const numberSnapshot =
+        await getDocs(numberQuery);
+
+
+      let nextNumber = 1;
+
+
+      if (!numberSnapshot.empty) {
+
+        const highest =
+          numberSnapshot.docs[0]
+            .data()
+            .orderNumber;
+
+
+        if (
+          typeof highest === "number"
+        ) {
+
+          nextNumber =
+            highest + 1;
+
+        }
+      }
+
+
+      /*
+      ----------------------------------------------
+      AUFTRAG SPEICHERN
+      ----------------------------------------------
+      */
+
+      await addDoc(
+        collection(db, "orders"),
+        {
+
+          orderNumber:
+            nextNumber,
+
+          orderCode:
+            `OSGTM-${String(nextNumber).padStart(4, "0")}`,
+
+          title,
+
+          description,
+
+          githubUrl:
+            normalizedGithub,
+
+          languages:
+            selectedLanguages,
+
+          frameworks:
+            selectedFrameworks,
+
+          databases:
+            selectedDatabases,
+
+          tools:
+            selectedTools,
+
+          platforms:
+            selectedPlatforms,
+
+          creatorId:
+            currentUser.uid,
+
+          creatorEmail:
+            email,
+
+          creatorPhone:
+            contactPhone.value.trim() || null,
+
+          status:
+            "open",
+
+          participants: [],
+
+          confirmations: {
+
+            contact:
+              true,
+
+            rules:
+              true,
+
+            credits:
+              true
+
+          },
+
+          createdAt:
+            serverTimestamp(),
+
+          updatedAt:
+            serverTimestamp(),
+
+          completedAt:
+            null
+
+        }
+      );
+
+
+      showMessage(
+        "Auftrag erfolgreich erstellt!",
+        "success"
+      );
+
+
+      orderForm.reset();
+
+
+      if (currentUser.email) {
+
+        contactEmail.value =
+          currentUser.email;
+
+      }
+
+
+      showActiveOrders();
+
+
+      await loadOrders();
+
+
+    } catch (error) {
+
+      console.error(
+        "Fehler beim Erstellen des Auftrags:",
+        error
+      );
+
+
+      showMessage(
+        `Auftrag konnte nicht erstellt werden: ${error.message}`,
+        "error"
+      );
+
+    } finally {
+
+      button.disabled = false;
+
+      button.textContent =
+        "Auftrag erstellen";
+
+    }
+
   }
+);
 
-});
 
-
-/*
-==================================================
- AUFTRÄGE LADEN
-==================================================
-*/
+/* ==================================================
+   AUFTRÄGE LADEN
+================================================== */
 
 async function loadOrders() {
 
   ordersList.innerHTML = `
-    <div class="empty-state">
-      Aufträge werden geladen...
+    <div class="empty-orders">
+      <div class="empty-orders-icon">📦</div>
+      <h3>Aufträge werden geladen...</h3>
     </div>
   `;
 
 
   try {
 
-    const ordersQuery = query(
-      collection(db, "orders"),
-      where("status", "==", "open")
-    );
+    const ordersQuery =
+      query(
+        collection(db, "orders"),
+        where("status", "==", "open")
+      );
 
 
     const snapshot =
@@ -647,10 +791,38 @@ async function loadOrders() {
     if (snapshot.empty) {
 
       ordersList.innerHTML = `
-        <div class="empty-state">
-          Aktuell gibt es keine offenen Aufträge.
+        <div class="empty-orders">
+
+          <div class="empty-orders-icon">
+            📭
+          </div>
+
+          <h3>
+            Noch keine aktiven Aufträge
+          </h3>
+
+          <p>
+            Erstelle den ersten Auftrag auf der Plattform.
+          </p>
+
+          <button
+            class="btn primary-btn"
+            id="emptyCreateOrderBtn"
+          >
+            + Auftrag erstellen
+          </button>
+
         </div>
       `;
+
+
+      document
+        .getElementById("emptyCreateOrderBtn")
+        .addEventListener(
+          "click",
+          showCreateOrder
+        );
+
 
       return;
     }
@@ -659,22 +831,24 @@ async function loadOrders() {
     ordersList.innerHTML = "";
 
 
-    snapshot.forEach((documentSnapshot) => {
+    snapshot.forEach(
+      (documentSnapshot) => {
 
-      const order =
-        documentSnapshot.data();
-
-
-      const card =
-        createOrderCard(
-          documentSnapshot.id,
-          order
-        );
+        const order =
+          documentSnapshot.data();
 
 
-      ordersList.appendChild(card);
+        const card =
+          createOrderCard(
+            documentSnapshot.id,
+            order
+          );
 
-    });
+
+        ordersList.appendChild(card);
+
+      }
+    );
 
 
   } catch (error) {
@@ -686,21 +860,36 @@ async function loadOrders() {
 
 
     ordersList.innerHTML = `
-      <div class="empty-state error">
-        Die Aufträge konnten nicht geladen werden.
+      <div class="empty-orders">
+
+        <div class="empty-orders-icon">
+          ⚠️
+        </div>
+
+        <h3>
+          Aufträge konnten nicht geladen werden
+        </h3>
+
+        <p>
+          ${escapeHtml(error.message)}
+        </p>
+
       </div>
     `;
+
   }
+
 }
 
 
-/*
-==================================================
- AUFTRAGSKARTE
-==================================================
-*/
+/* ==================================================
+   AUFTRAGSKARTE
+================================================== */
 
-function createOrderCard(documentId, order) {
+function createOrderCard(
+  documentId,
+  order
+) {
 
   const card =
     document.createElement("article");
@@ -714,22 +903,30 @@ function createOrderCard(documentId, order) {
     order.languages || [];
 
 
+  const frameworks =
+    order.frameworks || [];
+
+
   const platforms =
     order.platforms || [];
 
 
   card.innerHTML = `
 
-    <div class="order-card-header">
+    <div class="order-card-top">
 
       <div>
 
         <span class="order-code">
-          ${escapeHtml(order.orderCode || "OSGTM")}
+          ${escapeHtml(
+            order.orderCode || "OSGTM"
+          )}
         </span>
 
         <h3>
-          ${escapeHtml(order.title || "Ohne Titel")}
+          ${escapeHtml(
+            order.title || "Ohne Titel"
+          )}
         </h3>
 
       </div>
@@ -742,48 +939,78 @@ function createOrderCard(documentId, order) {
 
 
     <p class="order-description">
-      ${escapeHtml(order.description || "")}
+      ${escapeHtml(
+        order.description || ""
+      )}
     </p>
 
 
-    <div class="order-tags">
-
-      ${languages.map(language => `
-        <span class="tag">
-          ${escapeHtml(language)}
-        </span>
-      `).join("")}
-
-    </div>
-
-
-    <div class="order-tags">
-
-      ${platforms.map(platform => `
-        <span class="tag platform-tag">
-          ${escapeHtml(platform)}
-        </span>
-      `).join("")}
-
-    </div>
+    ${
+      languages.length
+        ? `
+          <div class="tag-group">
+            ${languages.map(language => `
+              <span class="tag">
+                ${escapeHtml(language)}
+              </span>
+            `).join("")}
+          </div>
+        `
+        : ""
+    }
 
 
-    <div class="order-card-footer">
+    ${
+      frameworks.length
+        ? `
+          <div class="tag-group">
+            ${frameworks.map(framework => `
+              <span class="tag">
+                ${escapeHtml(framework)}
+              </span>
+            `).join("")}
+          </div>
+        `
+        : ""
+    }
+
+
+    ${
+      platforms.length
+        ? `
+          <div class="tag-group">
+            ${platforms.map(platform => `
+              <span class="tag platform">
+                ${escapeHtml(platform)}
+              </span>
+            `).join("")}
+          </div>
+        `
+        : ""
+    }
+
+
+    <div class="order-footer">
 
       <a
-        href="${escapeHtml(order.githubUrl || "#")}"
+        href="${escapeHtml(
+          order.githubUrl || "#"
+        )}"
         target="_blank"
         rel="noopener noreferrer"
-        class="btn secondary-btn"
+        class="order-github"
       >
-        GitHub Repository
+        GitHub Repository →
       </a>
 
 
       <button
         class="btn primary-btn"
-        data-order-id="${escapeHtml(documentId)}"
+        data-order-id="${escapeHtml(
+          documentId
+        )}"
         disabled
+        title="Die Detailansicht bauen wir als Nächstes."
       >
         Auftrag ansehen
       </button>
@@ -797,11 +1024,9 @@ function createOrderCard(documentId, order) {
 }
 
 
-/*
-==================================================
- LOGOUT
-==================================================
-*/
+/* ==================================================
+   LOGOUT
+================================================== */
 
 logoutBtn.addEventListener(
   "click",
@@ -827,11 +1052,9 @@ logoutBtn.addEventListener(
 );
 
 
-/*
-==================================================
- AUTH
-==================================================
-*/
+/* ==================================================
+   AUTH
+================================================== */
 
 onAuthStateChanged(
   auth,
@@ -848,11 +1071,6 @@ onAuthStateChanged(
 
     currentUser = user;
 
-
-    /*
-    Standardmäßig die eigene
-    Login-E-Mail als Kontakt vorschlagen.
-    */
 
     if (user.email) {
 
