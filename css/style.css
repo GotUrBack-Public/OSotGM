@@ -1,20 +1,37 @@
-/* Open Sourcerers of the git mountain */
+/* =========================================================
+   OPEN SOURCERERS OF THE GIT MOUNTAIN
+   Global Styles
+   ========================================================= */
+
 
 :root {
   --bg: #090b10;
-  --card: #11151d;
-  --card-border: #252b36;
+  --surface: #11151d;
+  --surface-hover: #171c26;
+
+  --border: #252b36;
+
   --text: #f4f6f8;
   --muted: #8e98a8;
+
   --accent: #8b5cf6;
   --accent-hover: #7c3aed;
+
   --input: #0b0f15;
+
+  --success: #4ade80;
   --danger: #ff6b6b;
 }
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
 
 * {
   box-sizing: border-box;
 }
+
 
 html,
 body {
@@ -22,12 +39,20 @@ body {
   min-height: 100%;
 }
 
+
 body {
   min-height: 100vh;
+
   background:
-    radial-gradient(circle at 50% -10%, rgba(139, 92, 246, 0.18), transparent 35%),
+    radial-gradient(
+      circle at 50% -10%,
+      rgba(139, 92, 246, 0.18),
+      transparent 35%
+    ),
     var(--bg);
+
   color: var(--text);
+
   font-family:
     Inter,
     ui-sans-serif,
@@ -38,128 +63,519 @@ body {
     sans-serif;
 }
 
+
 button,
 input {
   font: inherit;
 }
 
+
+/* =========================================================
+   LOGIN
+   ========================================================= */
+
 .login-page {
   min-height: 100vh;
+
   display: grid;
   place-items: center;
+
   padding: 24px;
 }
 
+
 .login-card {
   width: min(100%, 430px);
+
   padding: 42px;
+
   background: rgba(17, 21, 29, 0.94);
-  border: 1px solid var(--card-border);
+
+  border: 1px solid var(--border);
+
   border-radius: 22px;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.45);
 }
+
 
 .brand {
   margin-bottom: 34px;
 }
 
+
 .eyebrow {
   margin: 0 0 10px;
+
   color: var(--accent);
+
   font-size: 0.75rem;
+
   font-weight: 800;
+
   letter-spacing: 0.2em;
 }
 
-h1 {
+
+.login-card h1 {
   margin: 0;
+
   font-size: clamp(2rem, 8vw, 3rem);
+
   line-height: 1;
+
   letter-spacing: -0.05em;
 }
 
+
 .subtitle {
   margin: 16px 0 0;
+
   color: var(--muted);
+
   line-height: 1.6;
 }
 
+
 .login-form {
   display: grid;
+
   gap: 10px;
 }
 
+
 .login-form label {
   margin-top: 8px;
+
   color: #c8ced8;
+
   font-size: 0.9rem;
+
   font-weight: 600;
 }
 
+
 .login-form input {
   width: 100%;
+
   padding: 13px 14px;
+
   color: var(--text);
+
   background: var(--input);
-  border: 1px solid var(--card-border);
+
+  border: 1px solid var(--border);
+
   border-radius: 10px;
+
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
+
 
 .login-form input::placeholder {
   color: #596272;
 }
 
+
 .login-form input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+
+  box-shadow:
+    0 0 0 3px rgba(139, 92, 246, 0.15);
 }
+
 
 .login-form button {
   margin-top: 16px;
+
   padding: 13px 16px;
+
   color: white;
+
   background: var(--accent);
+
   border: 0;
+
   border-radius: 10px;
+
   font-weight: 700;
+
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+
+  transition:
+    background 0.2s,
+    transform 0.2s;
 }
+
 
 .login-form button:hover {
   background: var(--accent-hover);
+
   transform: translateY(-1px);
 }
 
+
+.login-form button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
 .message {
   min-height: 22px;
+
   margin: 8px 0 0;
+
   font-size: 0.9rem;
 }
+
 
 .message.info {
   color: #b9a5ff;
 }
 
+
+.message.success {
+  color: var(--success);
+}
+
+
+.message.error {
+  color: var(--danger);
+}
+
+
 .closed-access {
   margin: 28px 0 0;
+
   padding-top: 20px;
-  border-top: 1px solid var(--card-border);
+
+  border-top: 1px solid var(--border);
+
   color: var(--muted);
+
   font-size: 0.78rem;
+
   line-height: 1.5;
+
   text-align: center;
 }
 
+
+/* =========================================================
+   APPLICATION
+   ========================================================= */
+
+.app {
+  min-height: 100vh;
+}
+
+
+/* =========================================================
+   TOPBAR
+   ========================================================= */
+
+.topbar {
+  min-height: 78px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 16px 32px;
+
+  background: rgba(9, 11, 16, 0.85);
+
+  border-bottom: 1px solid var(--border);
+
+  backdrop-filter: blur(12px);
+}
+
+
+.topbar-brand h1 {
+  margin: 0;
+
+  font-size: 1.05rem;
+
+  letter-spacing: -0.02em;
+}
+
+
+.topbar-brand .eyebrow {
+  margin-bottom: 3px;
+
+  font-size: 0.6rem;
+}
+
+
+.topbar-user {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+}
+
+
+#user-email {
+  color: var(--muted);
+
+  font-size: 0.85rem;
+}
+
+
+.secondary-button {
+  padding: 9px 14px;
+
+  color: var(--text);
+
+  background: transparent;
+
+  border: 1px solid var(--border);
+
+  border-radius: 9px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+
+
+.secondary-button:hover {
+  background: var(--surface);
+
+  border-color: #3a4250;
+}
+
+
+.secondary-button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+
+.dashboard {
+  width: min(1180px, calc(100% - 40px));
+
+  margin: 0 auto;
+
+  padding: 64px 0 80px;
+}
+
+
+.welcome {
+  margin-bottom: 42px;
+}
+
+
+.welcome h2 {
+  margin: 0;
+
+  font-size: clamp(2rem, 5vw, 3.5rem);
+
+  line-height: 1.05;
+
+  letter-spacing: -0.05em;
+}
+
+
+.welcome p:last-child {
+  max-width: 620px;
+
+  margin: 16px 0 0;
+
+  color: var(--muted);
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   DASHBOARD CARDS
+   ========================================================= */
+
+.dashboard-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+
+.dashboard-card {
+  min-height: 190px;
+
+  display: flex;
+
+  gap: 20px;
+
+  padding: 28px;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+
+  border-radius: 18px;
+
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    transform 0.2s;
+}
+
+
+.dashboard-card:hover {
+  background: var(--surface-hover);
+
+  border-color: #343c4a;
+
+  transform: translateY(-2px);
+}
+
+
+.card-icon {
+  width: 48px;
+  height: 48px;
+
+  flex: 0 0 48px;
+
+  display: grid;
+
+  place-items: center;
+
+  background: rgba(139, 92, 246, 0.12);
+
+  border: 1px solid rgba(139, 92, 246, 0.2);
+
+  border-radius: 13px;
+
+  font-size: 1.3rem;
+}
+
+
+.dashboard-card h3 {
+  margin: 0 0 9px;
+
+  font-size: 1.2rem;
+}
+
+
+.dashboard-card p {
+  margin: 0;
+
+  color: var(--muted);
+
+  line-height: 1.6;
+}
+
+
+.dashboard-card strong {
+  display: block;
+
+  margin-top: 18px;
+
+  font-size: 1.5rem;
+}
+
+
+.card-placeholder {
+  display: inline-block;
+
+  margin-top: 17px;
+
+  color: #aaa3bd;
+
+  font-size: 0.8rem;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+  .topbar {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    padding: 18px 20px;
+  }
+
+
+  .topbar-user {
+    width: 100%;
+
+    justify-content: space-between;
+  }
+
+
+  .dashboard {
+    width: min(100% - 28px, 1180px);
+
+    padding: 42px 0 60px;
+  }
+
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
 @media (max-width: 520px) {
+
   .login-page {
     padding: 14px;
   }
 
+
   .login-card {
     padding: 28px 22px;
+
     border-radius: 18px;
   }
+
+
+  #user-email {
+    max-width: 210px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+  }
+
+
+  .dashboard-card {
+    padding: 22px;
+  }
+
 }
+
+
+
