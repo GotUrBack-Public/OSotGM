@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Dashboard · Open Sourcerers</title>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <div class="app">
+
+    <header class="topbar">
+
+      <div class="topbar-brand">
+        <p class="eyebrow">OPEN SOURCERERS</p>
+        <h1>of the git mountain</h1>
+      </div>
+
+      <div class="topbar-user">
+
+        <span id="user-email">
+          Wird geladen...
+        </span>
+
+        <button
+          id="logout-button"
+          class="secondary-button"
+          type="button"
+        >
+          Logout
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <main class="dashboard">
+
+      <section class="welcome">
+
+        <p class="eyebrow">
+          DASHBOARD
+        </p>
+
+        <h2>
+          Willkommen zurück.
+        </h2>
+
+        <p>
+          Hier entsteht dein Workspace für
+          Arbeitszeit, Aufträge und Profile.
+        </p>
+
+      </section>
+
+
+      <section class="dashboard-grid">
+
+        <article class="dashboard-card">
+
+          <div class="card-icon">
+            ⏱
+          </div>
+
+          <div>
+
+            <h3>
+              Arbeitszeit
+            </h3>
+
+            <p>
+              Deine Arbeitszeit wird hier
+              später gestartet und beendet.
+            </p>
+
+            <strong id="monthly-hours">
+              0h 00min
+            </strong>
+
+          </div>
+
+        </article>
+
+
+        <article class="dashboard-card">
+
+          <div class="card-icon">
+            📋
+          </div>
+
+          <div>
+
+            <h3>
+              Aufträge
+            </h3>
+
+            <p>
+              Offene und aktive Aufträge
+              findest du hier.
+            </p>
+
+            <span class="card-placeholder">
+              Bald verfügbar
+            </span>
+
+          </div>
+
+        </article>
+
+
+        <article class="dashboard-card">
+
+          <div class="card-icon">
+            👤
+          </div>
+
+          <div>
+
+            <h3>
+              Mein Profil
+            </h3>
+
+            <p>
+              E-Mail, Titel und Techstack
+              werden hier angezeigt.
+            </p>
+
+            <span class="card-placeholder">
+              Bald verfügbar
+            </span>
+
+          </div>
+
+        </article>
+
+
+        <article class="dashboard-card">
+
+          <div class="card-icon">
+            📦
+          </div>
+
+          <div>
+
+            <h3>
+              Archiv
+            </h3>
+
+            <p>
+              Abgeschlossene Aufträge
+              werden hier gesammelt.
+            </p>
+
+            <span class="card-placeholder">
+              Bald verfügbar
+            </span>
+
+          </div>
+
+        </article>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <script
+    type="module"
+    src="js/dashboard.js"
+  ></script>
+
+</body>
+</html>
