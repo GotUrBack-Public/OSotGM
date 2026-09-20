@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Mein Profil · Open Sourcerers</title>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <div class="app">
+
+    <header class="topbar">
+
+      <div class="topbar-brand">
+
+        <p class="eyebrow">
+          OPEN SOURCERERS
+        </p>
+
+        <h1>
+          of the git mountain
+        </h1>
+
+      </div>
+
+
+      <div class="topbar-user">
+
+        <span id="user-email">
+          Wird geladen...
+        </span>
+
+        <button
+          id="back-button"
+          class="secondary-button"
+          type="button"
+        >
+          Dashboard
+        </button>
+
+        <button
+          id="logout-button"
+          class="secondary-button"
+          type="button"
+        >
+          Logout
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <main class="dashboard">
+
+      <section class="welcome">
+
+        <p class="eyebrow">
+          PROFILE
+        </p>
+
+        <h2>
+          Mein Profil
+        </h2>
+
+        <p>
+          Hier kannst du die Informationen hinterlegen,
+          die andere Sourcerers über dich sehen können.
+        </p>
+
+      </section>
+
+
+      <section class="profile-card">
+
+        <div class="profile-avatar">
+          <span id="profile-initial">
+            ?
+          </span>
+        </div>
+
+
+        <div class="profile-content">
+
+          <div class="profile-heading">
+
+            <div>
+
+              <p class="eyebrow">
+                ACCOUNT
+              </p>
+
+              <h3 id="profile-email">
+                Wird geladen...
+              </h3>
+
+            </div>
+
+          </div>
+
+
+          <form
+            id="profile-form"
+            class="profile-form"
+          >
+
+            <div class="form-group">
+
+              <label for="title">
+                Titel
+              </label>
+
+              <input
+                id="title"
+                type="text"
+                maxlength="80"
+                placeholder="z. B. Full Stack Developer"
+                autocomplete="off"
+              >
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="tech-stack">
+                Techstack
+              </label>
+
+              <input
+                id="tech-stack"
+                type="text"
+                maxlength="250"
+                placeholder="z. B. JavaScript, Firebase, React, Python"
+                autocomplete="off"
+              >
+
+              <span class="field-hint">
+                Trenne mehrere Technologien mit Kommas.
+              </span>
+
+            </div>
+
+
+            <button
+              id="save-profile"
+              class="primary-button"
+              type="submit"
+            >
+              Profil speichern
+            </button>
+
+
+            <p
+              id="profile-message"
+              class="message"
+              role="status"
+              aria-live="polite"
+            ></p>
+
+          </form>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <script
+    type="module"
+    src="js/profile.js"
+  ></script>
+
+</body>
+</html>
+
+
