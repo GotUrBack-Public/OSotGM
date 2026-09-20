@@ -2,21 +2,48 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>Open Sourcerers of the git mountain</title>
+
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
+
   <main class="login-page">
+
     <section class="login-card">
+
       <div class="brand">
-        <p class="eyebrow">OPEN SOURCERERS</p>
-        <h1>of the git mountain</h1>
-        <p class="subtitle">Private workspace for the people building together.</p>
+
+        <p class="eyebrow">
+          OPEN SOURCERERS
+        </p>
+
+        <h1>
+          of the git mountain
+        </h1>
+
+        <p class="subtitle">
+          Private workspace for the people building together.
+        </p>
+
       </div>
 
-      <form id="login-form" class="login-form">
-        <label for="email">E-Mail</label>
+
+      <form
+        id="login-form"
+        class="login-form"
+      >
+
+        <label for="email">
+          E-Mail
+        </label>
+
         <input
           id="email"
           name="email"
@@ -26,7 +53,11 @@
           required
         >
 
-        <label for="password">Passwort</label>
+
+        <label for="password">
+          Passwort
+        </label>
+
         <input
           id="password"
           name="password"
@@ -36,25 +67,36 @@
           required
         >
 
-        <button type="submit">Einloggen</button>
-        <p id="login-message" class="message" role="alert" aria-live="polite"></p>
+
+        <button type="submit">
+          Einloggen
+        </button>
+
+
+        <p
+          id="login-message"
+          class="message"
+          role="alert"
+          aria-live="polite"
+        ></p>
+
       </form>
 
+
       <p class="closed-access">
-        Closed Access · Accounts werden ausschließlich von einem Administrator erstellt.
+        Closed Access · Accounts werden ausschließlich
+        von einem Administrator erstellt.
       </p>
+
     </section>
+
   </main>
 
-  <script>
-    const form = document.getElementById("login-form");
-    const message = document.getElementById("login-message");
 
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      message.textContent = "Die Firebase-Anmeldung wird im nächsten Schritt eingerichtet.";
-      message.className = "message info";
-    });
-  </script>
+  <script
+    type="module"
+    src="js/auth.js"
+  ></script>
+
 </body>
 </html>
