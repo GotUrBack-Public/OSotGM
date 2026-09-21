@@ -3,7 +3,7 @@ import { auth, db } from "./firebase.js";
 import {
   onAuthStateChanged,
   signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 import {
   collection,
@@ -13,13 +13,12 @@ import {
   where,
   orderBy,
   serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
 /* ==================================================
    AUSWAHLDATEN
 ================================================== */
-
 const languages = [
   "JavaScript",
   "TypeScript",
@@ -62,7 +61,6 @@ const languages = [
   "SystemVerilog"
 ];
 
-
 const frameworks = [
   "React",
   "Next.js",
@@ -97,7 +95,6 @@ const frameworks = [
   "Unreal Engine"
 ];
 
-
 const databases = [
   "Firebase Firestore",
   "Firebase Realtime Database",
@@ -116,7 +113,6 @@ const databases = [
   "InfluxDB",
   "Elasticsearch"
 ];
-
 
 const tools = [
   "Git",
@@ -151,7 +147,6 @@ const tools = [
   "Yarn",
   "pnpm"
 ];
-
 
 const platforms = [
   "Web",
@@ -240,9 +235,7 @@ let currentUser = null;
 ================================================== */
 
 function showCreateOrder() {
-
   activeOrdersPanel.style.display = "none";
-
   createOrderPanel.style.display = "block";
 
   window.scrollTo({
@@ -253,9 +246,7 @@ function showCreateOrder() {
 
 
 function showActiveOrders() {
-
   createOrderPanel.style.display = "none";
-
   activeOrdersPanel.style.display = "block";
 
   window.scrollTo({
@@ -282,7 +273,6 @@ cancelCreateOrderBtn.addEventListener(
 ================================================== */
 
 function escapeHtml(value) {
-
   return String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
@@ -297,7 +287,6 @@ function renderSelectionList(
   items,
   prefix
 ) {
-
   const container =
     document.getElementById(containerId);
 
@@ -308,7 +297,6 @@ function renderSelectionList(
   container.innerHTML = "";
 
   items.forEach((item, index) => {
-
     const id =
       `${prefix}-${index}`;
 
@@ -332,13 +320,11 @@ function renderSelectionList(
     `;
 
     container.appendChild(label);
-
   });
 }
 
 
 function getSelectedValues(prefix) {
-
   const selected =
     document.querySelectorAll(
       `input[data-selection="${prefix}"]:checked`
@@ -355,7 +341,6 @@ function getSelectedValues(prefix) {
 ================================================== */
 
 function normalizeGithubUrl(value) {
-
   let url = value.trim();
 
   if (!url) {
@@ -363,44 +348,34 @@ function normalizeGithubUrl(value) {
   }
 
   if (!url.startsWith("https://github.com/")) {
-
     url =
       `https://github.com/${url}`;
   }
 
-
   try {
-
     const parsed =
       new URL(url);
-
 
     if (
       parsed.hostname !== "github.com" &&
       parsed.hostname !== "www.github.com"
     ) {
-
       return null;
     }
-
 
     const parts =
       parsed.pathname
         .split("/")
         .filter(Boolean);
 
-
     if (parts.length < 2) {
       return null;
     }
 
-
     return `https://github.com/${parts[0]}/${parts[1]}`;
 
   } catch {
-
     return null;
-
   }
 }
 
@@ -413,7 +388,6 @@ function showMessage(
   message,
   type = "info"
 ) {
-
   orderFormMessage.textContent =
     message;
 
@@ -432,9 +406,7 @@ orderForm.addEventListener(
 
     event.preventDefault();
 
-
     if (!currentUser) {
-
       showMessage(
         "Du musst eingeloggt sein.",
         "error"
@@ -443,23 +415,18 @@ orderForm.addEventListener(
       return;
     }
 
-
     const title =
       orderTitle.value.trim();
 
-
     const description =
       orderDescription.value.trim();
-
 
     const normalizedGithub =
       normalizeGithubUrl(
         githubUrl.value
       );
 
-
     if (!title) {
-
       showMessage(
         "Bitte gib einen Titel ein.",
         "error"
@@ -468,9 +435,7 @@ orderForm.addEventListener(
       return;
     }
 
-
     if (!description) {
-
       showMessage(
         "Bitte gib eine Beschreibung ein.",
         "error"
@@ -479,9 +444,7 @@ orderForm.addEventListener(
       return;
     }
 
-
     if (!normalizedGithub) {
-
       showMessage(
         "Bitte gib ein gültiges GitHub-Repository ein.",
         "error"
@@ -490,13 +453,10 @@ orderForm.addEventListener(
       return;
     }
 
-
     const email =
       contactEmail.value.trim();
 
-
     if (!email) {
-
       showMessage(
         "Eine Kontakt-E-Mail ist erforderlich.",
         "error"
@@ -505,29 +465,22 @@ orderForm.addEventListener(
       return;
     }
 
-
     const selectedLanguages =
       getSelectedValues("language");
-
 
     const selectedFrameworks =
       getSelectedValues("framework");
 
-
     const selectedDatabases =
       getSelectedValues("database");
-
 
     const selectedTools =
       getSelectedValues("tool");
 
-
     const selectedPlatforms =
       getSelectedValues("platform");
 
-
     if (selectedLanguages.length === 0) {
-
       showMessage(
         "Bitte wähle mindestens eine Programmiersprache aus.",
         "error"
@@ -536,9 +489,7 @@ orderForm.addEventListener(
       return;
     }
 
-
     if (selectedPlatforms.length === 0) {
-
       showMessage(
         "Bitte wähle mindestens eine Plattform aus.",
         "error"
@@ -547,9 +498,7 @@ orderForm.addEventListener(
       return;
     }
 
-
     if (!confirmContact.checked) {
-
       showMessage(
         "Bitte bestätige deine Kontaktangaben.",
         "error"
@@ -558,9 +507,7 @@ orderForm.addEventListener(
       return;
     }
 
-
     if (!confirmRules.checked) {
-
       showMessage(
         "Bitte bestätige die Auftragsregeln.",
         "error"
@@ -569,9 +516,7 @@ orderForm.addEventListener(
       return;
     }
 
-
     if (!confirmCredits.checked) {
-
       showMessage(
         "Bitte bestätige die Credit-Regelung.",
         "error"
@@ -580,18 +525,15 @@ orderForm.addEventListener(
       return;
     }
 
-
     const button =
       orderForm.querySelector(
         "button[type='submit']"
       );
 
-
     button.disabled = true;
 
     button.textContent =
       "Auftrag wird erstellt...";
-
 
     try {
 
@@ -607,13 +549,10 @@ orderForm.addEventListener(
           orderBy("orderNumber", "desc")
         );
 
-
       const numberSnapshot =
         await getDocs(numberQuery);
 
-
       let nextNumber = 1;
-
 
       if (!numberSnapshot.empty) {
 
@@ -622,14 +561,11 @@ orderForm.addEventListener(
             .data()
             .orderNumber;
 
-
         if (
           typeof highest === "number"
         ) {
-
           nextNumber =
             highest + 1;
-
         }
       }
 
@@ -730,7 +666,6 @@ orderForm.addEventListener(
 
 
       showActiveOrders();
-
 
       await loadOrders();
 
@@ -1119,6 +1054,9 @@ onAuthStateChanged(
 
   }
 );
+
+
+
 
 
 
