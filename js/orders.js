@@ -19,6 +19,7 @@ import {
 /* ==================================================
    AUSWAHLDATEN
 ================================================== */
+
 const languages = [
   "JavaScript",
   "TypeScript",
@@ -235,8 +236,12 @@ let currentUser = null;
 ================================================== */
 
 function showCreateOrder() {
-  activeOrdersPanel.style.display = "none";
-  createOrderPanel.style.display = "block";
+
+  activeOrdersPanel.style.display =
+    "none";
+
+  createOrderPanel.style.display =
+    "block";
 
   window.scrollTo({
     top: 0,
@@ -246,8 +251,12 @@ function showCreateOrder() {
 
 
 function showActiveOrders() {
-  createOrderPanel.style.display = "none";
-  activeOrdersPanel.style.display = "block";
+
+  createOrderPanel.style.display =
+    "none";
+
+  activeOrdersPanel.style.display =
+    "block";
 
   window.scrollTo({
     top: 0,
@@ -269,10 +278,11 @@ cancelCreateOrderBtn.addEventListener(
 
 
 /* ==================================================
-   AUSWAHLEN
+   HTML SICHER MACHEN
 ================================================== */
 
 function escapeHtml(value) {
+
   return String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
@@ -282,11 +292,16 @@ function escapeHtml(value) {
 }
 
 
+/* ==================================================
+   AUSWAHLEN RENDERN
+================================================== */
+
 function renderSelectionList(
   containerId,
   items,
   prefix
 ) {
+
   const container =
     document.getElementById(containerId);
 
@@ -296,35 +311,40 @@ function renderSelectionList(
 
   container.innerHTML = "";
 
-  items.forEach((item, index) => {
-    const id =
-      `${prefix}-${index}`;
+  items.forEach(
+    (item, index) => {
 
-    const label =
-      document.createElement("label");
+      const id =
+        `${prefix}-${index}`;
 
-    label.className =
-      "selection-option";
+      const label =
+        document.createElement("label");
 
-    label.innerHTML = `
-      <input
-        type="checkbox"
-        value="${escapeHtml(item)}"
-        data-selection="${prefix}"
-        id="${id}"
-      >
+      label.className =
+        "selection-option";
 
-      <span>
-        ${escapeHtml(item)}
-      </span>
-    `;
+      label.innerHTML = `
+        <input
+          type="checkbox"
+          value="${escapeHtml(item)}"
+          data-selection="${prefix}"
+          id="${id}"
+        >
 
-    container.appendChild(label);
-  });
+        <span>
+          ${escapeHtml(item)}
+        </span>
+      `;
+
+      container.appendChild(label);
+
+    }
+  );
 }
 
 
 function getSelectedValues(prefix) {
+
   const selected =
     document.querySelectorAll(
       `input[data-selection="${prefix}"]:checked`
@@ -337,22 +357,31 @@ function getSelectedValues(prefix) {
 
 
 /* ==================================================
-   GITHUB
+   GITHUB URL
 ================================================== */
 
 function normalizeGithubUrl(value) {
-  let url = value.trim();
+
+  let url =
+    value.trim();
 
   if (!url) {
     return null;
   }
 
-  if (!url.startsWith("https://github.com/")) {
+  if (
+    !url.startsWith(
+      "https://github.com/"
+    )
+  ) {
+
     url =
       `https://github.com/${url}`;
+
   }
 
   try {
+
     const parsed =
       new URL(url);
 
@@ -360,7 +389,9 @@ function normalizeGithubUrl(value) {
       parsed.hostname !== "github.com" &&
       parsed.hostname !== "www.github.com"
     ) {
+
       return null;
+
     }
 
     const parts =
@@ -372,10 +403,15 @@ function normalizeGithubUrl(value) {
       return null;
     }
 
-    return `https://github.com/${parts[0]}/${parts[1]}`;
+    return (
+      `https://github.com/` +
+      `${parts[0]}/${parts[1]}`
+    );
 
   } catch {
+
     return null;
+
   }
 }
 
@@ -388,6 +424,7 @@ function showMessage(
   message,
   type = "info"
 ) {
+
   orderFormMessage.textContent =
     message;
 
@@ -407,6 +444,7 @@ orderForm.addEventListener(
     event.preventDefault();
 
     if (!currentUser) {
+
       showMessage(
         "Du musst eingeloggt sein.",
         "error"
@@ -414,6 +452,7 @@ orderForm.addEventListener(
 
       return;
     }
+
 
     const title =
       orderTitle.value.trim();
@@ -426,7 +465,9 @@ orderForm.addEventListener(
         githubUrl.value
       );
 
+
     if (!title) {
+
       showMessage(
         "Bitte gib einen Titel ein.",
         "error"
@@ -435,7 +476,9 @@ orderForm.addEventListener(
       return;
     }
 
+
     if (!description) {
+
       showMessage(
         "Bitte gib eine Beschreibung ein.",
         "error"
@@ -444,7 +487,9 @@ orderForm.addEventListener(
       return;
     }
 
+
     if (!normalizedGithub) {
+
       showMessage(
         "Bitte gib ein gültiges GitHub-Repository ein.",
         "error"
@@ -453,10 +498,13 @@ orderForm.addEventListener(
       return;
     }
 
+
     const email =
       contactEmail.value.trim();
 
+
     if (!email) {
+
       showMessage(
         "Eine Kontakt-E-Mail ist erforderlich.",
         "error"
@@ -465,22 +513,37 @@ orderForm.addEventListener(
       return;
     }
 
+
     const selectedLanguages =
-      getSelectedValues("language");
+      getSelectedValues(
+        "language"
+      );
 
     const selectedFrameworks =
-      getSelectedValues("framework");
+      getSelectedValues(
+        "framework"
+      );
 
     const selectedDatabases =
-      getSelectedValues("database");
+      getSelectedValues(
+        "database"
+      );
 
     const selectedTools =
-      getSelectedValues("tool");
+      getSelectedValues(
+        "tool"
+      );
 
     const selectedPlatforms =
-      getSelectedValues("platform");
+      getSelectedValues(
+        "platform"
+      );
 
-    if (selectedLanguages.length === 0) {
+
+    if (
+      selectedLanguages.length === 0
+    ) {
+
       showMessage(
         "Bitte wähle mindestens eine Programmiersprache aus.",
         "error"
@@ -489,7 +552,11 @@ orderForm.addEventListener(
       return;
     }
 
-    if (selectedPlatforms.length === 0) {
+
+    if (
+      selectedPlatforms.length === 0
+    ) {
+
       showMessage(
         "Bitte wähle mindestens eine Plattform aus.",
         "error"
@@ -498,7 +565,9 @@ orderForm.addEventListener(
       return;
     }
 
+
     if (!confirmContact.checked) {
+
       showMessage(
         "Bitte bestätige deine Kontaktangaben.",
         "error"
@@ -507,7 +576,9 @@ orderForm.addEventListener(
       return;
     }
 
+
     if (!confirmRules.checked) {
+
       showMessage(
         "Bitte bestätige die Auftragsregeln.",
         "error"
@@ -516,7 +587,9 @@ orderForm.addEventListener(
       return;
     }
 
+
     if (!confirmCredits.checked) {
+
       showMessage(
         "Bitte bestätige die Credit-Regelung.",
         "error"
@@ -525,34 +598,46 @@ orderForm.addEventListener(
       return;
     }
 
+
     const button =
       orderForm.querySelector(
         "button[type='submit']"
       );
+
 
     button.disabled = true;
 
     button.textContent =
       "Auftrag wird erstellt...";
 
+
     try {
 
-      /*
-      ----------------------------------------------
-      NÄCHSTE AUFTRAGSNUMMER
-      ----------------------------------------------
-      */
+      /* ============================================
+         NÄCHSTE AUFTRAGSNUMMER
+      ============================================ */
 
       const numberQuery =
         query(
-          collection(db, "orders"),
-          orderBy("orderNumber", "desc")
+          collection(
+            db,
+            "orders"
+          ),
+          orderBy(
+            "orderNumber",
+            "desc"
+          )
         );
 
+
       const numberSnapshot =
-        await getDocs(numberQuery);
+        await getDocs(
+          numberQuery
+        );
+
 
       let nextNumber = 1;
+
 
       if (!numberSnapshot.empty) {
 
@@ -561,30 +646,37 @@ orderForm.addEventListener(
             .data()
             .orderNumber;
 
+
         if (
           typeof highest === "number"
         ) {
+
           nextNumber =
             highest + 1;
+
         }
+
       }
 
 
-      /*
-      ----------------------------------------------
-      AUFTRAG SPEICHERN
-      ----------------------------------------------
-      */
+      /* ============================================
+         AUFTRAG SPEICHERN
+      ============================================ */
 
       await addDoc(
-        collection(db, "orders"),
+        collection(
+          db,
+          "orders"
+        ),
         {
 
           orderNumber:
             nextNumber,
 
           orderCode:
-            `OSGTM-${String(nextNumber).padStart(4, "0")}`,
+            `OSGTM-${String(
+              nextNumber
+            ).padStart(4, "0")}`,
 
           title,
 
@@ -615,7 +707,8 @@ orderForm.addEventListener(
             email,
 
           creatorPhone:
-            contactPhone.value.trim() || null,
+            contactPhone.value.trim() ||
+            null,
 
           status:
             "open",
@@ -683,9 +776,11 @@ orderForm.addEventListener(
         "error"
       );
 
+
     } finally {
 
-      button.disabled = false;
+      button.disabled =
+        false;
 
       button.textContent =
         "Auftrag erstellen";
@@ -704,8 +799,15 @@ async function loadOrders() {
 
   ordersList.innerHTML = `
     <div class="empty-orders">
-      <div class="empty-orders-icon">📦</div>
-      <h3>Aufträge werden geladen...</h3>
+
+      <div class="empty-orders-icon">
+        📦
+      </div>
+
+      <h3>
+        Aufträge werden geladen...
+      </h3>
+
     </div>
   `;
 
@@ -714,13 +816,22 @@ async function loadOrders() {
 
     const ordersQuery =
       query(
-        collection(db, "orders"),
-        where("status", "==", "open")
+        collection(
+          db,
+          "orders"
+        ),
+        where(
+          "status",
+          "==",
+          "open"
+        )
       );
 
 
     const snapshot =
-      await getDocs(ordersQuery);
+      await getDocs(
+        ordersQuery
+      );
 
 
     if (snapshot.empty) {
@@ -743,6 +854,7 @@ async function loadOrders() {
           <button
             class="btn primary-btn"
             id="emptyCreateOrderBtn"
+            type="button"
           >
             + Auftrag erstellen
           </button>
@@ -751,12 +863,20 @@ async function loadOrders() {
       `;
 
 
-      document
-        .getElementById("emptyCreateOrderBtn")
-        .addEventListener(
+      const emptyCreateOrderBtn =
+        document.getElementById(
+          "emptyCreateOrderBtn"
+        );
+
+
+      if (emptyCreateOrderBtn) {
+
+        emptyCreateOrderBtn.addEventListener(
           "click",
           showCreateOrder
         );
+
+      }
 
 
       return;
@@ -780,7 +900,9 @@ async function loadOrders() {
           );
 
 
-        ordersList.appendChild(card);
+        ordersList.appendChild(
+          card
+        );
 
       }
     );
@@ -806,7 +928,9 @@ async function loadOrders() {
         </h3>
 
         <p>
-          ${escapeHtml(error.message)}
+          ${escapeHtml(
+            error.message
+          )}
         </p>
 
       </div>
@@ -827,7 +951,9 @@ function createOrderCard(
 ) {
 
   const card =
-    document.createElement("article");
+    document.createElement(
+      "article"
+    );
 
 
   card.className =
@@ -835,15 +961,27 @@ function createOrderCard(
 
 
   const languages =
-    order.languages || [];
+    Array.isArray(
+      order.languages
+    )
+      ? order.languages
+      : [];
 
 
   const frameworks =
-    order.frameworks || [];
+    Array.isArray(
+      order.frameworks
+    )
+      ? order.frameworks
+      : [];
 
 
   const platforms =
-    order.platforms || [];
+    Array.isArray(
+      order.platforms
+    )
+      ? order.platforms
+      : [];
 
 
   card.innerHTML = `
@@ -854,13 +992,15 @@ function createOrderCard(
 
         <span class="order-code">
           ${escapeHtml(
-            order.orderCode || "OSGTM"
+            order.orderCode ||
+            "OSGTM"
           )}
         </span>
 
         <h3>
           ${escapeHtml(
-            order.title || "Ohne Titel"
+            order.title ||
+            "Ohne Titel"
           )}
         </h3>
 
@@ -875,7 +1015,8 @@ function createOrderCard(
 
     <p class="order-description">
       ${escapeHtml(
-        order.description || ""
+        order.description ||
+        ""
       )}
     </p>
 
@@ -884,11 +1025,17 @@ function createOrderCard(
       languages.length
         ? `
           <div class="tag-group">
-            ${languages.map(language => `
-              <span class="tag">
-                ${escapeHtml(language)}
-              </span>
-            `).join("")}
+
+            ${languages.map(
+              language => `
+                <span class="tag">
+                  ${escapeHtml(
+                    language
+                  )}
+                </span>
+              `
+            ).join("")}
+
           </div>
         `
         : ""
@@ -899,11 +1046,17 @@ function createOrderCard(
       frameworks.length
         ? `
           <div class="tag-group">
-            ${frameworks.map(framework => `
-              <span class="tag">
-                ${escapeHtml(framework)}
-              </span>
-            `).join("")}
+
+            ${frameworks.map(
+              framework => `
+                <span class="tag">
+                  ${escapeHtml(
+                    framework
+                  )}
+                </span>
+              `
+            ).join("")}
+
           </div>
         `
         : ""
@@ -914,11 +1067,17 @@ function createOrderCard(
       platforms.length
         ? `
           <div class="tag-group">
-            ${platforms.map(platform => `
-              <span class="tag platform">
-                ${escapeHtml(platform)}
-              </span>
-            `).join("")}
+
+            ${platforms.map(
+              platform => `
+                <span class="tag platform">
+                  ${escapeHtml(
+                    platform
+                  )}
+                </span>
+              `
+            ).join("")}
+
           </div>
         `
         : ""
@@ -929,7 +1088,8 @@ function createOrderCard(
 
       <a
         href="${escapeHtml(
-          order.githubUrl || "#"
+          order.githubUrl ||
+          "#"
         )}"
         target="_blank"
         rel="noopener noreferrer"
@@ -944,8 +1104,7 @@ function createOrderCard(
         data-order-id="${escapeHtml(
           documentId
         )}"
-        disabled
-        title="Die Detailansicht bauen wir als Nächstes."
+        type="button"
       >
         Auftrag ansehen
       </button>
@@ -955,7 +1114,44 @@ function createOrderCard(
   `;
 
 
+  /* ============================================
+     AUFTRAG ANSEHEN
+  ============================================ */
+
+  const viewButton =
+    card.querySelector(
+      "[data-order-id]"
+    );
+
+
+  if (viewButton) {
+
+    viewButton.addEventListener(
+      "click",
+      () => {
+
+        const orderId =
+          viewButton.dataset.orderId;
+
+
+        if (!orderId) {
+          return;
+        }
+
+
+        window.location.href =
+          `order.html?id=${encodeURIComponent(
+            orderId
+          )}`;
+
+      }
+    );
+
+  }
+
+
   return card;
+
 }
 
 
@@ -969,10 +1165,14 @@ logoutBtn.addEventListener(
 
     try {
 
-      await signOut(auth);
+      await signOut(
+        auth
+      );
+
 
       window.location.href =
         "index.html";
+
 
     } catch (error) {
 
@@ -1001,10 +1201,12 @@ onAuthStateChanged(
         "index.html";
 
       return;
+
     }
 
 
-    currentUser = user;
+    currentUser =
+      user;
 
 
     if (user.email) {
@@ -1054,6 +1256,13 @@ onAuthStateChanged(
 
   }
 );
+
+
+
+
+
+
+
 
 
 
